@@ -1,6 +1,10 @@
 
 def calc(s):
-    a=int(s[0])+int(s[2])
-    return int(a)
+    print('s=',s)
+    nums=map(int,s.split('+'))
+    print('nums=',nums)
+    return sum(nums)
 
+print(calc("1"))
 print(calc("1+2"))
+print(calc("1+2+3"))
