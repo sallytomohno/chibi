@@ -56,7 +56,6 @@ class Div(Binary) :
 e = Add(1, 2)
 assert e.eval () == 3
 print("OK")
-折りたたむ
 
 
 
