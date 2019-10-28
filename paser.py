@@ -14,3 +14,9 @@ s1=s[0:pos]
 s2=s[pos+1:]
 print(s,s1,s2)
 
+parse("1")
+parse("1+2")
+parse("1+2+3")
+
+
+
