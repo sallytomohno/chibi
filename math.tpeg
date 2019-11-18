@@ -1,0 +1,11 @@
+ 
+example Value 321-0216
+
+Zip={
+    Value '-' Value
+    #Zip
+}
+
+DIGIT = [0-9]
+
+Value = {DIGIT+ #int}
