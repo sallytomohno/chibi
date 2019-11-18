@@ -1,9 +1,13 @@
- 
-example Value 321-0216
+example Add 1+2+3
 
 Zip={
     Value '-' Value
     #Zip
+}
+
+Add={
+    Value '+' Value
+    #Add
 }
 
 DIGIT = [0-9]
