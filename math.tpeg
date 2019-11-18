@@ -1,4 +1,11 @@
-example Add 1+2+3
+
+example Add 1
+example Add 1+2
+example Add 1+2*3
+
+Expr={Value '+' Expr #Add}
+    /{Value '*' Expr #Mul}
+    /Value
 
 Zip={
     Value '-' Value
@@ -6,7 +13,7 @@ Zip={
 }
 
 Add={
-    Value '+' Value
+    Value ('+' Value)*
     #Add
 }
 
