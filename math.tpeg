@@ -1,22 +1,10 @@
 
-example Add 1
-example Add 1+2
-example Add 1+2*3
+example Expr (1+2)*3
+example Expr 1+2*3
 
-Expr={Value '+' Expr #Add}
-    /{Value '*' Expr #Mul}
-    /Value
+Expr={Prod '+' Prod #Add}/Value
+Prod={Value '*' Value #Mul}/Value
 
-Zip={
-    Value '-' Value
-    #Zip
-}
 
-Add={
-    Value ('+' Value)*
-    #Add
-}
-
+Value = {DIGIT+ #int}/'(' Expr ')'
 DIGIT = [0-9]
-
-Value = {DIGIT+ #int}
