@@ -21,5 +21,6 @@ def calc(t):
     return 0
 
 
-t=parser('@2')
+t=parser('1+2*3+4*5')
 print(repr(t))
+print(calc(t))
