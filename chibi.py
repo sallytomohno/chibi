@@ -63,11 +63,22 @@ class Var(Expr):
         raise NameError(self.name)
 
 class Assign(Expr):
+    __slot__=['name','e']
+    def __init__(self,name,e):
+        self.name=name
+        self.e=Expr.new(e)
 
-env={}
+    def eval(self,env):
+        env[self.name]=self.e.eval(env)
+        return env[self.name]
+
+env = {}
 e=Assign('x',Val(1))
 print(e.eval(env))
 e=Assign('x',Add(Var('x'),Val(2)))
+print(e.eval(env))
+
+print('テスト終わり')
 
 try:
     e=Var('x')
