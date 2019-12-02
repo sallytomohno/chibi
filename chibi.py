@@ -106,23 +106,27 @@ def conv(tree):
         return Mul(conv(tree[0]), conv(tree[1]))
     if tree == 'Div':
         return Div(conv(tree[0]), conv(tree[1]))
-    print('@TODO', tree.tag)
+    if tree == 'Var':
+        return Var(str(tree))
+    if tree == 'LetDec1':
+        return Assign(str(tree[0]), conv(tree[1]))
+    print('@TODO', tree.tag,repr(tree))
     return Val(str(tree))
-def run(src: str):
+def run(src: str,env:dict):
     tree = parser(src)
     if tree.isError():
         print(repr(tree))
     else:
         e = conv(tree)
-        print(repr(e))
-        print(e.eval({}))
+        print('env',env)
+        print(e.eval(env))
 def main():
     try:
         while True:
             s = input('>>> ')
             if s == '':
                 break
-            run(s)
+            run(s,env)
     except EOFError:
         return
 if __name__ == '__main__':
