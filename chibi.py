@@ -52,8 +52,21 @@ class Mod(Binary):
     __slots__ = ['left', 'right']
     def eval(self, env: dict):
         return self.left.eval(env) % self.right.eval(env)
+class Ep(Binary):
+    __slots__ = ['left', 'right']
+    def eval(self, env: dict): # cond ? x:y
+        return 1 if self.left.eval(env) == self.right.eval(env)  else 0      class Var(Expr):
+class Ne(Binary):
+    __slots__ = ['left', 'right']
+    def eval(self, env: dict):
+        return 1 if self.left.eval(env) != self.right.eval(env) else 0
+
+class Lt(Binary):
+    __slots__ = ['left', 'right']
+    def eval(self, env: dict):
+        return 1 self.left.eval(env) < self.right.eval(env)  else 0 
 class Var(Expr):
-    __slots__ = ['name']
+ __slots__ = ['name']
     def __init__(self, name):
         self.name = name
     def eval(self, env: dict):
@@ -83,6 +96,12 @@ def conv(tree):
         return Div(conv(tree[0]), conv(tree[1]))
     if tree == 'Mod':
         return Mod(conv(tree[0]), conv(tree[1]))
+    if tree == 'Ep':
+        return Mod(conv(tree[0]), conv(tree[1]))
+    if tree == 'Ne':
+        return Mod(conv(tree[0]), conv(tree[1]))
+    if tree == 'Lt':
+        return Mod(conv(tree[0]), conv(tree[1]))
     if tree == 'Var':
         return Var(str(tree))
     if tree == 'LetDecl':
@@ -109,4 +128,3 @@ def main():
         return
 if __name__ == '__main__':
     main()
-    
