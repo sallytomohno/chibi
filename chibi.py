@@ -97,7 +97,7 @@ class Block(Expr):
     def __init__(self,*exprs):
         self.exprs = exprs
     def eval(self,env):
-        foe e in self.exprs:
+        for e in self.exprs:
             e.eval(env)
         pass
 
