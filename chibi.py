@@ -54,19 +54,30 @@ class Mod(Binary):
         return self.left.eval(env) % self.right.eval(env)
 class Ep(Binary):
     __slots__ = ['left', 'right']
-    def eval(self, env: dict): # cond ? x:y
-        return 1 if self.left.eval(env) == self.right.eval(env)  else 0      class Var(Expr):
+    def eval(self, env: dict): 
+        return 1 if self.left.eval(env) == self.right.eval(env)  else 0      
 class Ne(Binary):
     __slots__ = ['left', 'right']
     def eval(self, env: dict):
         return 1 if self.left.eval(env) != self.right.eval(env) else 0
-
 class Lt(Binary):
     __slots__ = ['left', 'right']
     def eval(self, env: dict):
-        return 1 self.left.eval(env) < self.right.eval(env)  else 0 
+        return 1  if self.left.eval(env) < self.right.eval(env)  else 0 
+class Lte(Binary):
+    __slots__ = ['left', 'right']
+    def eval(self, env: dict):
+        return 1  if self.left.eval(env) <= self.right.eval(env)  else 0
+class Gt(Binary):
+    __slots__ = ['left', 'right']
+    def eval(self, env: dict):
+        return 1  if self.left.eval(env) > self.right.eval(env)  else 0
+class Gte(Binary):
+    __slots__ = ['left', 'right']
+    def eval(self, env: dict):
+        return 1  if self.left.eval(env) >= self.right.eval(env)  else 0
 class Var(Expr):
- __slots__ = ['name']
+    __slots__ = ['name']
     def __init__(self, name):
         self.name = name
     def eval(self, env: dict):
@@ -81,9 +92,23 @@ class Assign(Expr):
     def eval(self, env):
         env[self.name] = self.e.eval(env)
         return env[self.name]
+
+class If(Expr):
+    __slots__=['cond','then','else']
+    def __init__(cond,then,else_):
+        self.cond = cond
+        self.then = then
+        self.else_ = else_
+    def eval(self,env):
+        if yesorno == 1:
+            return self.then.eval(env)
+        else:
+            return self.else_.eval(env)
 def conv(tree):
     if tree == 'Block':
         return conv(tree[0])
+    if tree == 'If':
+        return If(conv(tree[0]), conv(tree[1]),conv(tree[2]))
     if tree == 'Val' or tree == 'Int':
         return Val(int(str(tree)))
     if tree == 'Add':
@@ -97,17 +122,17 @@ def conv(tree):
     if tree == 'Mod':
         return Mod(conv(tree[0]), conv(tree[1]))
     if tree == 'Ep':
-        return Mod(conv(tree[0]), conv(tree[1]))
+        return Ep(conv(tree[0]), conv(tree[1]))
     if tree == 'Ne':
-        return Mod(conv(tree[0]), conv(tree[1]))
+        return Ne(conv(tree[0]), conv(tree[1]))
     if tree == 'Lt':
-        return Mod(conv(tree[0]), conv(tree[1]))
+        return Lt(conv(tree[0]), conv(tree[1]))
     if tree == 'Lte':
-        return Mod(conv(tree[0]), conv(tree[1]))
+        return Lte(conv(tree[0]), conv(tree[1]))
     if tree == 'Gt':
-        return Mod(conv(tree[0]), conv(tree[1]))
+        return Gt(conv(tree[0]), conv(tree[1]))
     if tree == 'Gte':
-        return Mod(conv(tree[0]), conv(tree[1]))
+        return Gte(conv(tree[0]), conv(tree[1]))
     if tree == 'Var':
         return Var(str(tree))
     if tree == 'LetDecl':
