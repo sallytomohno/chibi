@@ -99,9 +99,6 @@ class Block(Expr):
     def eval(self,env):
         for e in self.exprs:
             e.eval(env)
-        pass
-
-Block(e,e2,e3,e4,e5)
 
 class While(Expr):
     __slots__=['cond','body']
@@ -109,7 +106,9 @@ class While(Expr):
         self.cond = cond
         self.body = body
     def eval(self,env):
-        pass
+        while self.cond.eval(env) !=0:
+            self.bpdy.eval(env)
+
 
 class If(Expr):
     __slots__=['cond','then','else']
@@ -127,6 +126,8 @@ def conv(tree):
         return conv(tree[0])
     if tree == 'If':
         return If(conv(tree[0]), conv(tree[1]),conv(tree[2]))
+    if tree == 'While':
+        return While(conv(tree[0]), conv(tree[1]))
     if tree == 'Val' or tree == 'Int':
         return Val(int(str(tree)))
     if tree == 'Add':
