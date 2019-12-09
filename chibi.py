@@ -92,6 +92,24 @@ class Assign(Expr):
     def eval(self, env):
         env[self.name] = self.e.eval(env)
         return env[self.name]
+class Block(Expr):
+    __slots__=['exprs']
+    def __init__(self,*exprs):
+        self.exprs = exprs
+    def eval(self,env):
+        foe e in self.exprs:
+            e.eval(env)
+        pass
+
+Block(e,e2,e3,e4,e5)
+
+class While(Expr):
+    __slots__=['cond','body']
+    def __init__(self,cond,body):
+        self.cond = cond
+        self.body = body
+    def eval(self,env):
+        pass
 
 class If(Expr):
     __slots__=['cond','then','else']
