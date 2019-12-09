@@ -102,6 +102,12 @@ def conv(tree):
         return Mod(conv(tree[0]), conv(tree[1]))
     if tree == 'Lt':
         return Mod(conv(tree[0]), conv(tree[1]))
+    if tree == 'Lte':
+        return Mod(conv(tree[0]), conv(tree[1]))
+    if tree == 'Gt':
+        return Mod(conv(tree[0]), conv(tree[1]))
+    if tree == 'Gte':
+        return Mod(conv(tree[0]), conv(tree[1]))
     if tree == 'Var':
         return Var(str(tree))
     if tree == 'LetDecl':
