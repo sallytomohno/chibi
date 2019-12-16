@@ -155,6 +155,7 @@ class FuncApp(Expr):
     return self.func.body.eval(env)
 
 e=FuncApp(f,Add(1,1))
+print(e,'=>',e.eval({}))
 assert e.eval({})==3
 
 def conv(tree):
