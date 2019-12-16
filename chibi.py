@@ -139,8 +139,10 @@ class FuncApp(Expr):
     def __init__(self,func:Lambda,param):
         self.func=func
         self.param=Expr.new(param)
+    def__repr__(self):
+        return f'({repr(self.func)})({repr(self.param)})'
 
-def eval(self,env):
+    def eval(self,env):
     v=self.param.eval(env)
     name=self.func.name
     env[name]=v
