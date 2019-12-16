@@ -161,6 +161,8 @@ assert e.eval({})==3
 def conv(tree):
     if tree == 'Block':
         return conv(tree[0])
+    if tree == 'FunDec1':
+        return Assign(str(tree[0]), Lambda(tree[1]), conv(tree[2]))
     if tree == 'If':
         return If(conv(tree[0]), conv(tree[1]), conv(tree[2]))
     if tree == 'While':
