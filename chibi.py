@@ -134,16 +134,22 @@ class Lambda(Expr):
 f=Lambda('x',Add(Var('x'),1))
 print(repr(f))
 
+def copy(env):
+    newenv={}
+    for x in env.keys:
+        newenv[x]=env[x]
+    return env
+
 class FuncApp(Expr):
     __slot__=['func','param']
     def __init__(self,func:Lambda,param):
         self.func=func
         self.param=Expr.new(param)
-    def__repr__(self):
+    def __repr__(self):
         return f'({repr(self.func)})({repr(self.param)})'
 
     def eval(self,env):
-    v=self.param.eval(env)
+    v = self.param.eval(env)
     name=self.func.name
     env[name]=v
     return self.func.body.eval(env)
