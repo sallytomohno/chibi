@@ -80,6 +80,8 @@ class Var(Expr):
     __slots__ = ['name']
     def __init__(self, name):
         self.name = name
+    def __repr__(self):
+        return self.name
     def eval(self, env: dict):
         if self.name in env:
             return env[self.name]
@@ -132,7 +134,7 @@ def copy(env): #環境をコピーすることでローカルスコープを作�
     newenv = {}
     for x in env.keys():
         newenv[x] = env[x]
-    return env
+    return newenv
 class FuncApp(Expr):
     __slots__ = ['func', 'param']
     def __init__(self, func: Lambda, param):
@@ -154,18 +156,6 @@ def conv(tree):
         return Assign(str(tree[0]), Lambda(str(tree[1]), conv(tree[2])))
     if tree == 'FuncApp':   # この２行を追加します
         return FuncApp(conv(tree[0]), conv(tree[1]))
-
-e=FuncApp(f,Add(1,1))
-print(e,'=>',e.eval({}))
-assert e.eval({})==3
-
-def conv(tree):
-    if tree == 'Block':
-        return conv(tree[0])
-    if tree == 'FunDec1':
-        return Assign(str(tree[0]), Lambda(tree[1]), conv(tree[2]))
-    if tree == 'FunApp':
-        return FunApp(conv(tree[0]), conv(tree[1]))
     if tree == 'If':
         return If(conv(tree[0]), conv(tree[1]), conv(tree[2]))
     if tree == 'While':
