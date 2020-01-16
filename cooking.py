@@ -12,4 +12,7 @@ import requests
 query = "カレー"
 url = "https://cookpad.com/" #クックパッド
 res = requests.get(url)
-status = res.status_code
+
+soup = BeautifulSoup(res.text,"html.parser")
+p = soup.find("p",class_="floatl pt5p")
+ 
